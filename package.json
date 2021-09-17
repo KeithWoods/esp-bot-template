@@ -1,0 +1,35 @@
+{
+  "name": "bot",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "author": "Keith Woods",
+  "private": true,
+  "license": "Apache-2.0",
+  "scripts": {
+    "copy-esp": "./scripts/copyEsp.sh",
+    "trash": "./scripts/trash.sh && rm -rf ./node_modules",
+    "deploy": "yarn build && cd ./env && /bin/sh deploy_bot.sh",
+    "clean": "rm -rf dist",
+    "build": "yarn clean && node_modules/.bin/tsc",
+    "dev": "yarn clean && node_modules/.bin/tsc --watch",
+    "start": "export RUN_APP=true && node dist/app.js ../.config/prod.config.json"
+  },
+  "dependencies": {
+    "esp-js": "5.1.2",
+    "esp-js-di": "5.1.2",
+    "esp-js-rx": "5.1.2",
+    "immutable": "^4.0.0-rc.12",
+    "moment": "^2.29.1",
+    "node-fetch": "^2.6.1",
+    "rxjs": "^6.6.7",
+    "ws": "^7.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.41",
+    "@types/node-fetch": "^2.5.10",
+    "@types/ws": "^7.4.2",
+    "nodemon": "^2.0.7",
+    "lerna": "^4.0.0",
+    "typescript": "^4.2.4"
+  }
+}

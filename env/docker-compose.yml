@@ -1,0 +1,32 @@
+version: "3.7"
+services:
+  portainer:
+    image: portainer/portainer:${PORTAINER_VERSION}
+    restart: "always"
+    command: "--no-auth -H unix:///var/run/docker.sock"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainerdata:/data:rw
+    ports:
+      - "9000:9000"
+
+  bot:
+    image: node:${NODE_VERSION}
+    user: "node"
+    working_dir: /home/node/app
+    ports:
+      - 9101:9100
+    environment:
+      - RUN_APP=true
+    volumes:
+      # Note all paths are under /home/node as that's who (above) this image runs as.
+      - botappvolume:/home/node/app:ro
+      - botstatevolume:/home/node/state:rw
+    expose:
+      - "8081"
+    command: ["node", "./app.js", "./prod.config.json"]
+
+volumes:
+  portainerdata:
+  botappvolume:
+  botstatevolume:
